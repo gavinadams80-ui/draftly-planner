@@ -1,0 +1,16 @@
+{
+  "name": "Draftly Planner — an ADHD life planner",
+  "short_name": "Draftly Planner",
+  "description": "A gentle, reusable, low-overwhelm ADHD life planner. Start anywhere, track gently, missed days are okay.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#faf3ec",
+  "theme_color": "#faf3ec",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
