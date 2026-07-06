@@ -13,7 +13,11 @@
 // CACHE version uses build timestamp for automatic cache busting on each deploy
 // The SW activate handler automatically deletes old cache versions, ensuring fresh assets
 // Format: draftly-planner-v{TIMESTAMP}
-const CACHE_VERSION = '20260707040725'; // Replaced by build script
+<<<<<<< HEAD
+const CACHE_VERSION = '20260707025936'; // Replaced by build script
+=======
+const CACHE_VERSION = '20260707025834'; // Replaced by build script
+>>>>>>> ff0b27a (fix: use correct placeholder for cache version injection in service worker)
 const CACHE = 'draftly-planner-v' + CACHE_VERSION;
 const INDEX_URL = new URL('./', self.registration.scope).href;
 
