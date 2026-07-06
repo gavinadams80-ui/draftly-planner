@@ -10,7 +10,7 @@
  * src/lib/reminders.ts — keep the DB shape in sync) on 'periodicsync' wake-ups
  * and shows one gentle notification per item per day. */
 
-const CACHE = 'draftly-planner-v2';
+const CACHE = 'draftly-planner-v3';
 const INDEX_URL = new URL('./', self.registration.scope).href;
 
 self.addEventListener('install', () => {

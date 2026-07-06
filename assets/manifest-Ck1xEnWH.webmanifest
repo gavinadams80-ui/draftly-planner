@@ -1,7 +1,7 @@
 {
-  "name": "Busy Woman's Life Planner",
-  "short_name": "Busy Woman's Planner",
-  "description": "Busy Woman's Life Planner — a gentle, ADHD-friendly life planner for wellness, cycle tracking, and planning. Start anywhere, track gently, missed days are okay.",
+  "name": "Draftly Planner — an ADHD life planner",
+  "short_name": "Draftly Planner",
+  "description": "A gentle, reusable, low-overwhelm ADHD life planner. Start anywhere, track gently, missed days are okay.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
