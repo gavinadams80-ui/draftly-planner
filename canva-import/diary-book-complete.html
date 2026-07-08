@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Draftly — Complete Diary Book</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #d8d0c4; }
+  body { font-family: Georgia, 'Times New Roman', serif; display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 24px 0; }
+
+  /* Every page is A5 portrait (148 x 210mm, one physical sheet) — no page here is meant to
+   *  be split across a fold, so nothing sits astride a spine. Delete any page/section you
+   *  don't want; what's left prints as a normal single-sided A5 diary insert. */
+  .sheet { width: 560px; height: 794px; background: #faf3ec; padding: 30px 32px; display: flex; flex-direction: column; }
+
+  .head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e8d9cc; padding-bottom: 6px; margin-bottom: 10px; }
+  .brand { font-weight: 700; font-size: 15px; color: #b16038; letter-spacing: 0.02em; }
+  .ctx { font-family: Arial, sans-serif; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #857262; }
+  .sub { font-family: Arial, sans-serif; font-size: 10px; color: #857262; font-style: italic; margin: 0 0 12px; }
+
+  /* ---- cover ---- */
+  .cover-frame { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; position: relative; }
+  .bloom { position: absolute; width: 56px; height: 56px; color: #b16038; opacity: 0.85; }
+  .bloom.tl { top: -6px; left: -6px; } .bloom.tr { top: -6px; right: -6px; transform: scaleX(-1); }
+  .bloom.bl { bottom: -6px; left: -6px; transform: scaleY(-1); } .bloom.br { bottom: -6px; right: -6px; transform: scale(-1,-1); }
+  .eyebrow { font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #b16038; }
+  .cover-title { font-size: 36px; color: #4a3f35; margin: 0; font-weight: 700; }
+  .flourish { font-size: 14px; color: #b16038; }
+  .range { font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #857262; margin: 0; }
+  .owner { font-size: 15px; font-style: italic; color: #4a3f35; margin: 0; }
+
+  /* ---- year overview: 2 cols x 6 rows of mini months ---- */
+  .yr-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(6, 1fr); gap: 8px; }
+  .yr-month { border: 1px solid #e8d9cc; border-radius: 6px; padding: 5px 7px; display: flex; flex-direction: column; background: #fdf6ea; }
+  .yr-label { font-size: 10px; font-weight: 700; color: #4a3f35; margin-bottom: 3px; }
+  .yr-mm { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; flex: 1; }
+  .yr-dow { text-align: center; font-family: Arial, sans-serif; font-size: 6px; color: #b7a08c; font-weight: 700; }
+  .yr-cell { text-align: center; font-family: Arial, sans-serif; font-size: 6.5px; color: #6b5344; }
+  .yr-cell.out { color: transparent; }
+
+  /* ---- month page ---- */
+  .mo-grid { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: 18px repeat(5, 1fr); gap: 3px; }
+  .mo-dow { text-align: center; font-family: Arial, sans-serif; font-size: 8px; font-weight: 700; color: #857262; text-transform: uppercase; }
+  .mo-cell { border: 1px solid #e8d9cc; border-radius: 4px; padding: 3px 4px; background: #fdf6ea; }
+  .mo-date { font-size: 11px; font-weight: 700; color: #4a3f35; }
+
+  /* ---- day page: full-width hours, footer row of top3 + notes ---- */
+  .dp-hours { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .dp-hours i { flex: 1; min-height: 3px; border-bottom: 1px solid #e8d9cc; font-style: normal; position: relative; }
+  .dp-hours i .t { position: absolute; left: 1px; top: 0; font-family: Arial, sans-serif; font-size: 7px; color: #c8b8a2; }
+  .dp-foot { flex: 0 0 130px; display: flex; gap: 10px; margin-top: 10px; }
+
+  /* shared small box used by day-foot + several tool pages */
+  .box { flex: 1; border: 1px solid #e8d9cc; border-radius: 7px; background: #fdf6ea; padding: 8px 11px; display: flex; flex-direction: column; }
+  .box-title { font-family: Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 0.09em; color: #b16038; font-weight: 700; margin-bottom: 6px; }
+  .box .rule { flex: 1; border-bottom: 1px solid #ecdfce; min-height: 3px; }
+
+  /* ---- brain dump: single wide ruled column ---- */
+  .bd-lines { flex: 1; display: flex; flex-direction: column; }
+  .bd-lines i { flex: 1; min-height: 3px; border-bottom: 1px solid #e8d9cc; font-style: normal; }
+
+  /* ---- goals: stacked cards ---- */
+  .gl-stack { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .gl-card { flex: 1; border: 1px solid #e8d9cc; border-radius: 8px; background: #fdf6ea; padding: 8px 12px; display: flex; flex-direction: column; }
+  .gl-label { font-family: Arial, sans-serif; font-size: 8px; text-transform: uppercase; letter-spacing: 0.09em; color: #b16038; font-weight: 700; }
+  .gl-title-line { font-size: 13px; border-bottom: 1px solid #e6d6c4; padding-bottom: 3px; margin: 3px 0 5px; }
+  .gl-steps { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  .gl-step { display: flex; align-items: flex-end; gap: 6px; }
+  .tick { width: 9px; height: 9px; border: 1.3px solid #b16038; border-radius: 2px; flex: 0 0 auto; }
+  .rule-plain { flex: 1; border-bottom: 1px solid #ecdfce; }
+
+  /* ---- weekly habit tracker: habits x 7 days (portrait-friendly) ---- */
+  .ht-table { flex: 1; display: grid; grid-template-columns: 110px repeat(7, 1fr); grid-auto-rows: 1fr; gap: 3px; }
+  .ht-dow { font-family: Arial, sans-serif; font-size: 8px; color: #b7a08c; text-align: center; font-weight: 700; }
+  .ht-name { font-family: Arial, sans-serif; font-size: 9px; color: #4a3f35; font-weight: 700; display: flex; align-items: center; }
+  .ht-cell { border: 1px solid #ecdfce; border-radius: 3px; background: #fdf6ea; }
+
+  /* ---- weekly reset: 4 stacked strips ---- */
+  .wr-stack { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .wr-card { flex: 1; border: 1px solid #e8d9cc; border-radius: 7px; background: #fdf6ea; padding: 7px 11px; display: flex; flex-direction: column; }
+  .wr-label { font-family: Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 0.09em; color: #b16038; font-weight: 700; margin-bottom: 4px; }
+
+  /* ---- mood & energy: weekly, mood row + energy row ---- */
+  .me-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; font-family: Arial, sans-serif; font-size: 8px; color: #857262; }
+  .me-table { flex: 1; display: grid; grid-template-columns: 60px repeat(7, 1fr); grid-template-rows: 18px 1fr 1fr; gap: 4px; }
+  .me-row-label { font-family: Arial, sans-serif; font-size: 9px; color: #4a3f35; font-weight: 700; display: flex; align-items: center; }
+  .me-cell { border: 1px solid #ecdfce; border-radius: 4px; background: #fdf6ea; }
+
+  /* ---- budget table ---- */
+  .bg-table { flex: 1; display: flex; flex-direction: column; border: 1px solid #e8d9cc; border-radius: 7px; overflow: hidden; background: #fdf6ea; }
+  .bg-row { flex: 1; display: grid; grid-template-columns: 1.3fr 1fr 1fr; border-bottom: 1px solid #ecdfce; align-items: center; padding: 0 10px; }
+  .bg-row:last-child { border-bottom: none; }
+  .bg-row.head-row { background: #f3e2cf; font-family: Arial, sans-serif; font-size: 8px; text-transform: uppercase; letter-spacing: 0.06em; color: #b16038; font-weight: 700; }
+  .bg-cat { font-size: 12px; color: #4a3f35; }
+  .bg-amt { border-bottom: 1px solid #ecdfce; height: 14px; margin-right: 6px; }
+
+  /* ---- meal planner: days as rows, meals as columns (portrait-friendly) ---- */
+  .mp-grid { flex: 1; display: grid; grid-template-columns: 44px repeat(4, 1fr); grid-template-rows: 16px repeat(7, 1fr); gap: 3px; }
+  .mp-meal-h { text-align: center; font-family: Arial, sans-serif; font-size: 7.5px; font-weight: 700; color: #857262; text-transform: uppercase; }
+  .mp-day { font-family: Arial, sans-serif; font-size: 9px; font-weight: 700; color: #a07f5f; display: flex; align-items: center; }
+  .mp-cell { border: 1px solid #e8d9cc; border-radius: 3px; background: #fdf6ea; }
+  .mp-shop { flex: 0 0 110px; margin-top: 10px; display: flex; flex-direction: column; }
+
+  /* ---- vision & bucket list: 2 x 3 cards ---- */
+  .vb-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 1fr); gap: 8px; }
+  .vb-card { border: 1px solid #e8d9cc; border-radius: 7px; background: #fdf6ea; padding: 7px 9px; display: flex; flex-direction: column; }
+  .vb-tag { font-family: Arial, sans-serif; font-size: 7px; text-transform: uppercase; letter-spacing: 0.09em; color: #b16038; font-weight: 700; margin-bottom: 3px; }
+  .vb-title-line { font-size: 11px; border-bottom: 1px solid #e6d6c4; padding-bottom: 3px; margin-bottom: 4px; }
+  .vb-desc { flex: 1; border-bottom: 1px solid #ecdfce; }
+
+  /* ---- wins list ---- */
+  .wn-list { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .wn-row { flex: 1; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #e8d9cc; padding-bottom: 4px; }
+  .wn-star { font-size: 14px; color: #b16038; }
+  .wn-date { font-family: Arial, sans-serif; font-size: 9px; color: #a07f5f; width: 42px; flex: 0 0 auto; }
+  .wn-rule { flex: 1; border-bottom: 1px solid #ecdfce; }
+</style>
+</head>
+<body>
+
+  <!-- 1. COVER -->
+  <div class="sheet" data-document-role="page" data-label="Cover">
+    <div class="cover-frame">
+      <svg class="bloom tl" viewBox="0 0 60 60"><g fill="currentColor"><circle cx="30" cy="14" r="7"/><circle cx="43" cy="24" r="7"/><circle cx="38" cy="39" r="7"/><circle cx="22" cy="39" r="7"/><circle cx="17" cy="24" r="7"/></g><circle cx="30" cy="27" r="6.5" fill="#fff9f0" stroke="currentColor" stroke-width="1.5"/></svg>
+      <svg class="bloom tr" viewBox="0 0 60 60"><g fill="currentColor"><circle cx="30" cy="14" r="7"/><circle cx="43" cy="24" r="7"/><circle cx="38" cy="39" r="7"/><circle cx="22" cy="39" r="7"/><circle cx="17" cy="24" r="7"/></g><circle cx="30" cy="27" r="6.5" fill="#fff9f0" stroke="currentColor" stroke-width="1.5"/></svg>
+      <svg class="bloom bl" viewBox="0 0 60 60"><g fill="currentColor"><circle cx="30" cy="14" r="7"/><circle cx="43" cy="24" r="7"/><circle cx="38" cy="39" r="7"/><circle cx="22" cy="39" r="7"/><circle cx="17" cy="24" r="7"/></g><circle cx="30" cy="27" r="6.5" fill="#fff9f0" stroke="currentColor" stroke-width="1.5"/></svg>
+      <svg class="bloom br" viewBox="0 0 60 60"><g fill="currentColor"><circle cx="30" cy="14" r="7"/><circle cx="43" cy="24" r="7"/><circle cx="38" cy="39" r="7"/><circle cx="22" cy="39" r="7"/><circle cx="17" cy="24" r="7"/></g><circle cx="30" cy="27" r="6.5" fill="#fff9f0" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span class="eyebrow">✿ a gentle life planner ✿</span>
+      <h1 class="cover-title">Life Planner</h1>
+      <div class="flourish">❀ ── ✿ ── ❀</div>
+      <p class="range">July – September 2026</p>
+      <p class="owner">for you</p>
+    </div>
+  </div>
+
+  <!-- 2. YEAR OVERVIEW -->
+  <div class="sheet" data-document-role="page" data-label="Year overview">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Year overview · 2026</span></div>
+    <div class="yr-grid">
+      <div class="yr-month"><span class="yr-label">January</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span><span class="yr-cell">30</span><span class="yr-cell">31</span></div></div>
+      <div class="yr-month"><span class="yr-label">February</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span></div></div>
+      <div class="yr-month"><span class="yr-label">March</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span><span class="yr-cell">30</span><span class="yr-cell">31</span></div></div>
+      <div class="yr-month"><span class="yr-label">April</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span></div></div>
+      <div class="yr-month"><span class="yr-label">May</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span><span class="yr-cell">30</span><span class="yr-cell">31</span></div></div>
+      <div class="yr-month"><span class="yr-label">June</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span></div></div>
+      <div class="yr-month"><span class="yr-label">July</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span><span class="yr-cell">30</span><span class="yr-cell">31</span></div></div>
+      <div class="yr-month"><span class="yr-label">August</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span><span class="yr-cell">30</span></div></div>
+      <div class="yr-month"><span class="yr-label">September</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span></div></div>
+      <div class="yr-month"><span class="yr-label">October</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span><span class="yr-cell">30</span><span class="yr-cell">31</span></div></div>
+      <div class="yr-month"><span class="yr-label">November</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span><span class="yr-cell">29</span></div></div>
+      <div class="yr-month"><span class="yr-label">December</span><div class="yr-mm"><span class="yr-dow">M</span><span class="yr-dow">T</span><span class="yr-dow">W</span><span class="yr-dow">T</span><span class="yr-dow">F</span><span class="yr-dow">S</span><span class="yr-dow">S</span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell out"></span><span class="yr-cell">1</span><span class="yr-cell">2</span><span class="yr-cell">3</span><span class="yr-cell">4</span><span class="yr-cell">5</span><span class="yr-cell">6</span><span class="yr-cell">7</span><span class="yr-cell">8</span><span class="yr-cell">9</span><span class="yr-cell">10</span><span class="yr-cell">11</span><span class="yr-cell">12</span><span class="yr-cell">13</span><span class="yr-cell">14</span><span class="yr-cell">15</span><span class="yr-cell">16</span><span class="yr-cell">17</span><span class="yr-cell">18</span><span class="yr-cell">19</span><span class="yr-cell">20</span><span class="yr-cell">21</span><span class="yr-cell">22</span><span class="yr-cell">23</span><span class="yr-cell">24</span><span class="yr-cell">25</span><span class="yr-cell">26</span><span class="yr-cell">27</span><span class="yr-cell">28</span></div></div>
+    </div>
+  </div>
+
+  <!-- 3. MONTH PAGE -->
+  <div class="sheet" data-document-role="page" data-label="Month page">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">July 2026</span></div>
+    <div class="mo-grid">
+      <span class="mo-dow">Mon</span><span class="mo-dow">Tue</span><span class="mo-dow">Wed</span><span class="mo-dow">Thu</span><span class="mo-dow">Fri</span><span class="mo-dow">Sat</span><span class="mo-dow">Sun</span>
+      <div class="mo-cell"></div><div class="mo-cell"></div><div class="mo-cell"><span class="mo-date">1</span></div><div class="mo-cell"><span class="mo-date">2</span></div><div class="mo-cell"><span class="mo-date">3</span></div><div class="mo-cell"><span class="mo-date">4</span></div><div class="mo-cell"><span class="mo-date">5</span></div>
+      <div class="mo-cell"><span class="mo-date">6</span></div><div class="mo-cell"><span class="mo-date">7</span></div><div class="mo-cell"><span class="mo-date">8</span></div><div class="mo-cell"><span class="mo-date">9</span></div><div class="mo-cell"><span class="mo-date">10</span></div><div class="mo-cell"><span class="mo-date">11</span></div><div class="mo-cell"><span class="mo-date">12</span></div>
+      <div class="mo-cell"><span class="mo-date">13</span></div><div class="mo-cell"><span class="mo-date">14</span></div><div class="mo-cell"><span class="mo-date">15</span></div><div class="mo-cell"><span class="mo-date">16</span></div><div class="mo-cell"><span class="mo-date">17</span></div><div class="mo-cell"><span class="mo-date">18</span></div><div class="mo-cell"><span class="mo-date">19</span></div>
+      <div class="mo-cell"><span class="mo-date">20</span></div><div class="mo-cell"><span class="mo-date">21</span></div><div class="mo-cell"><span class="mo-date">22</span></div><div class="mo-cell"><span class="mo-date">23</span></div><div class="mo-cell"><span class="mo-date">24</span></div><div class="mo-cell"><span class="mo-date">25</span></div><div class="mo-cell"><span class="mo-date">26</span></div>
+      <div class="mo-cell"><span class="mo-date">27</span></div><div class="mo-cell"><span class="mo-date">28</span></div><div class="mo-cell"><span class="mo-date">29</span></div><div class="mo-cell"><span class="mo-date">30</span></div><div class="mo-cell"><span class="mo-date">31</span></div><div class="mo-cell"></div><div class="mo-cell"></div>
+    </div>
+  </div>
+
+  <!-- 4. DAY PAGE -->
+  <div class="sheet" data-document-role="page" data-label="Day page">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Wednesday, 16 July 2026</span></div>
+    <div class="dp-hours">
+      <i><span class="t">7am</span></i><i><span class="t">8am</span></i><i><span class="t">9am</span></i><i><span class="t">10am</span></i><i><span class="t">11am</span></i>
+      <i><span class="t">12pm</span></i><i><span class="t">1pm</span></i><i><span class="t">2pm</span></i><i><span class="t">3pm</span></i><i><span class="t">4pm</span></i>
+      <i><span class="t">5pm</span></i><i><span class="t">6pm</span></i><i><span class="t">7pm</span></i><i><span class="t">8pm</span></i><i><span class="t">9pm</span></i>
+    </div>
+    <div class="dp-foot">
+      <div class="box"><span class="box-title">top 3 today</span><span class="rule"></span><span class="rule"></span><span class="rule"></span></div>
+      <div class="box"><span class="box-title">notes</span><span class="rule"></span><span class="rule"></span><span class="rule"></span></div>
+    </div>
+  </div>
+
+  <!-- 5. BRAIN DUMP -->
+  <div class="sheet" data-document-role="page" data-label="Brain Dump">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Brain Dump</span></div>
+    <p class="sub">offload everything in your head — sort it out later, or don't</p>
+    <div class="bd-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+
+  <!-- 6. GOALS -->
+  <div class="sheet" data-document-role="page" data-label="Goals">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Goals</span></div>
+    <p class="sub">a few that matter — not everything, just what counts</p>
+    <div class="gl-stack">
+      <div class="gl-card"><span class="gl-label">Goal 1</span><span class="gl-title-line"></span><div class="gl-steps"><div class="gl-step"><span class="tick"></span><span class="rule-plain"></span></div><div class="gl-step"><span class="tick"></span><span class="rule-plain"></span></div></div></div>
+      <div class="gl-card"><span class="gl-label">Goal 2</span><span class="gl-title-line"></span><div class="gl-steps"><div class="gl-step"><span class="tick"></span><span class="rule-plain"></span></div><div class="gl-step"><span class="tick"></span><span class="rule-plain"></span></div></div></div>
+      <div class="gl-card"><span class="gl-label">Goal 3</span><span class="gl-title-line"></span><div class="gl-steps"><div class="gl-step"><span class="tick"></span><span class="rule-plain"></span></div><div class="gl-step"><span class="tick"></span><span class="rule-plain"></span></div></div></div>
+      <div class="gl-card"><span class="gl-label">Goal 4</span><span class="gl-title-line"></span><div class="gl-steps"><div class="gl-step"><span class="tick"></span><span class="rule-plain"></span></div><div class="gl-step"><span class="tick"></span><span class="rule-plain"></span></div></div></div>
+    </div>
+  </div>
+
+  <!-- 7. HABIT TRACKER (weekly, portrait-friendly) -->
+  <div class="sheet" data-document-role="page" data-label="Habit Tracker">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Habit Tracker</span></div>
+    <p class="sub">no-pressure ticks — a week at a glance, missed days are okay</p>
+    <div class="ht-table">
+      <span></span><span class="ht-dow">M</span><span class="ht-dow">T</span><span class="ht-dow">W</span><span class="ht-dow">T</span><span class="ht-dow">F</span><span class="ht-dow">S</span><span class="ht-dow">S</span>
+      <div class="ht-name">habit one</div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div>
+      <div class="ht-name">habit two</div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div>
+      <div class="ht-name">habit three</div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div>
+      <div class="ht-name">habit four</div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div>
+      <div class="ht-name">habit five</div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div>
+      <div class="ht-name">habit six</div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div>
+      <div class="ht-name">habit seven</div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div>
+      <div class="ht-name">habit eight</div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div><div class="ht-cell"></div>
+    </div>
+  </div>
+
+  <!-- 8. WEEKLY RESET -->
+  <div class="sheet" data-document-role="page" data-label="Weekly Reset">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Weekly Reset</span></div>
+    <p class="sub">a gentle look back before the next week begins</p>
+    <div class="wr-stack">
+      <div class="wr-card"><span class="wr-label">went well</span><span class="rule"></span></div>
+      <div class="wr-card"><span class="wr-label">felt hard</span><span class="rule"></span></div>
+      <div class="wr-card"><span class="wr-label">carry forward</span><span class="rule"></span></div>
+      <div class="wr-card"><span class="wr-label">let go</span><span class="rule"></span></div>
+    </div>
+  </div>
+
+  <!-- 9. MOOD & ENERGY (weekly) -->
+  <div class="sheet" data-document-role="page" data-label="Mood and Energy">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Mood &amp; Energy</span></div>
+    <p class="sub">check in each day — a symbol for mood, a mark for energy</p>
+    <div class="me-legend"><span>☀️ sunny</span><span>🙂 okay</span><span>😐 meh</span><span>🌧️ stormy</span><span>🌫️ foggy</span></div>
+    <div class="me-table">
+      <span></span><span class="ht-dow">M</span><span class="ht-dow">T</span><span class="ht-dow">W</span><span class="ht-dow">T</span><span class="ht-dow">F</span><span class="ht-dow">S</span><span class="ht-dow">S</span>
+      <div class="me-row-label">mood</div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div>
+      <div class="me-row-label">energy</div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div><div class="me-cell"></div>
+    </div>
+  </div>
+
+  <!-- 10. BUDGET TRACKER -->
+  <div class="sheet" data-document-role="page" data-label="Budget Tracker">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Budget Tracker</span></div>
+    <p class="sub">income · expenses · savings — one gentle page a month</p>
+    <div class="bg-table">
+      <div class="bg-row head-row"><span>category</span><span>planned</span><span>actual</span></div>
+      <div class="bg-row"><span class="bg-cat">Income</span><span class="bg-amt"></span><span class="bg-amt"></span></div>
+      <div class="bg-row"><span class="bg-cat">Housing</span><span class="bg-amt"></span><span class="bg-amt"></span></div>
+      <div class="bg-row"><span class="bg-cat">Food</span><span class="bg-amt"></span><span class="bg-amt"></span></div>
+      <div class="bg-row"><span class="bg-cat">Transport</span><span class="bg-amt"></span><span class="bg-amt"></span></div>
+      <div class="bg-row"><span class="bg-cat">Health</span><span class="bg-amt"></span><span class="bg-amt"></span></div>
+      <div class="bg-row"><span class="bg-cat">Personal</span><span class="bg-amt"></span><span class="bg-amt"></span></div>
+      <div class="bg-row"><span class="bg-cat">Subscriptions</span><span class="bg-amt"></span><span class="bg-amt"></span></div>
+      <div class="bg-row"><span class="bg-cat">Savings</span><span class="bg-amt"></span><span class="bg-amt"></span></div>
+      <div class="bg-row"><span class="bg-cat">Other</span><span class="bg-amt"></span><span class="bg-amt"></span></div>
+    </div>
+  </div>
+
+  <!-- 11. MEAL PLANNER (days as rows) -->
+  <div class="sheet" data-document-role="page" data-label="Meal Planner">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Meal Planner</span></div>
+    <p class="sub">plan · shop · prep — one less decision every day</p>
+    <div class="mp-grid">
+      <span></span><span class="mp-meal-h">B</span><span class="mp-meal-h">L</span><span class="mp-meal-h">D</span><span class="mp-meal-h">Snack</span>
+      <div class="mp-day">Mon</div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div>
+      <div class="mp-day">Tue</div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div>
+      <div class="mp-day">Wed</div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div>
+      <div class="mp-day">Thu</div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div>
+      <div class="mp-day">Fri</div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div>
+      <div class="mp-day">Sat</div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div>
+      <div class="mp-day">Sun</div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div><div class="mp-cell"></div>
+    </div>
+    <div class="mp-shop box"><span class="box-title">Shopping list</span><span class="rule"></span><span class="rule"></span><span class="rule"></span></div>
+  </div>
+
+  <!-- 12. VISION & BUCKET LIST -->
+  <div class="sheet" data-document-role="page" data-label="Vision and Bucket List">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Vision &amp; Bucket List</span></div>
+    <p class="sub">dreams, plans, inspo — the joys worth planning for</p>
+    <div class="vb-grid">
+      <div class="vb-card"><span class="vb-tag">holiday</span><span class="vb-title-line"></span><span class="vb-desc"></span></div>
+      <div class="vb-card"><span class="vb-tag">home</span><span class="vb-title-line"></span><span class="vb-desc"></span></div>
+      <div class="vb-card"><span class="vb-tag">health</span><span class="vb-title-line"></span><span class="vb-desc"></span></div>
+      <div class="vb-card"><span class="vb-tag">dreams</span><span class="vb-title-line"></span><span class="vb-desc"></span></div>
+      <div class="vb-card"><span class="vb-tag">someday</span><span class="vb-title-line"></span><span class="vb-desc"></span></div>
+      <div class="vb-card"><span class="vb-tag">someday</span><span class="vb-title-line"></span><span class="vb-desc"></span></div>
+    </div>
+  </div>
+
+  <!-- 13. WINS & DONE -->
+  <div class="sheet" data-document-role="page" data-label="Wins and Done">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Wins &amp; Done</span></div>
+    <p class="sub">proof you did stuff — celebrate the small things too</p>
+    <div class="wn-list">
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+      <div class="wn-row"><span class="wn-star">⭐</span><span class="wn-date">____</span><span class="wn-rule"></span></div>
+    </div>
+  </div>
+
+</body>
+</html>
