@@ -13,7 +13,7 @@
 // CACHE version uses build timestamp for automatic cache busting on each deploy
 // The SW activate handler automatically deletes old cache versions, ensuring fresh assets
 // Format: draftly-planner-v{TIMESTAMP}
-const CACHE_VERSION = '20260708151342'; // Replaced by build script (scripts/inject-cache-version.js)
+const CACHE_VERSION = '20260709063723'; // Replaced by build script (scripts/inject-cache-version.js)
 const CACHE = 'draftly-planner-v' + CACHE_VERSION;
 const INDEX_URL = new URL('./', self.registration.scope).href;
 
@@ -116,6 +116,7 @@ async function checkReminders() {
         icon: 'icons/icon-192.png',
         badge: 'icons/icon-192.png',
         tag: item.id,
+        data: { route: item.route },
       });
       notified[item.id] = today;
       changed = true;
@@ -132,11 +133,14 @@ self.addEventListener('periodicsync', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
+  // Each reminder carries the in-app route it's about (bills vs appointments) —
+  // written by reminders.ts/checkRemindersNow and checkReminders above.
+  const route = (event.notification.data && event.notification.data.route) || '#/tool/notifications';
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
       const open = clients.find((c) => c.url.startsWith(self.registration.scope));
       if (open) return open.focus();
-      return self.clients.openWindow(INDEX_URL + '#/tool/bills');
+      return self.clients.openWindow(INDEX_URL + route);
     }),
   );
 });
