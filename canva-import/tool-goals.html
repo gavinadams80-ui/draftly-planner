@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Draftly — Goals Template</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #e9e2d8; }
+  body { font-family: Georgia, 'Times New Roman', serif; }
+  .sheet { width: 1123px; height: 794px; background: #faf3ec; padding: 34px 42px; display: flex; flex-direction: column; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e8d9cc; padding-bottom: 6px; margin-bottom: 6px; }
+  .brand { font-weight: 700; font-size: 20px; color: #b16038; letter-spacing: 0.02em; }
+  .ctx { font-family: Arial, sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #857262; }
+  .sub { font-family: Arial, sans-serif; font-size: 13px; color: #857262; font-style: italic; margin: 0 0 14px; }
+  .grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; }
+  .card { border: 1px solid #e8d9cc; border-radius: 10px; background: #fdf6ea; padding: 14px 18px; display: flex; flex-direction: column; }
+  .label { font-family: Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #b16038; font-weight: 700; }
+  .goal-line { font-size: 18px; border-bottom: 1px solid #e6d6c4; padding: 6px 0 10px; margin-bottom: 8px; }
+  .steps { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .step { display: flex; align-items: flex-end; gap: 8px; }
+  .tick { width: 12px; height: 12px; border: 1.5px solid #b16038; border-radius: 3px; flex: 0 0 auto; }
+  .rule { flex: 1; border-bottom: 1px solid #ecdfce; font-family: Arial, sans-serif; font-size: 11px; color: #857262; }
+  .deadline { margin-top: 8px; font-family: Arial, sans-serif; font-size: 10px; color: #a07f5f; }
+</style>
+</head>
+<body>
+  <div class="sheet" data-document-role="page" data-label="Draftly goals">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Goals</span></div>
+    <p class="sub">a few that matter — not everything, just what counts</p>
+    <div class="grid">
+      <div class="card"><span class="label">Goal 1</span><span class="goal-line"></span>
+        <div class="steps"><div class="step"><span class="tick"></span><span class="rule"></span></div><div class="step"><span class="tick"></span><span class="rule"></span></div><div class="step"><span class="tick"></span><span class="rule"></span></div></div>
+        <span class="deadline">by: ______________</span></div>
+      <div class="card"><span class="label">Goal 2</span><span class="goal-line"></span>
+        <div class="steps"><div class="step"><span class="tick"></span><span class="rule"></span></div><div class="step"><span class="tick"></span><span class="rule"></span></div><div class="step"><span class="tick"></span><span class="rule"></span></div></div>
+        <span class="deadline">by: ______________</span></div>
+      <div class="card"><span class="label">Goal 3</span><span class="goal-line"></span>
+        <div class="steps"><div class="step"><span class="tick"></span><span class="rule"></span></div><div class="step"><span class="tick"></span><span class="rule"></span></div><div class="step"><span class="tick"></span><span class="rule"></span></div></div>
+        <span class="deadline">by: ______________</span></div>
+      <div class="card"><span class="label">Goal 4</span><span class="goal-line"></span>
+        <div class="steps"><div class="step"><span class="tick"></span><span class="rule"></span></div><div class="step"><span class="tick"></span><span class="rule"></span></div><div class="step"><span class="tick"></span><span class="rule"></span></div></div>
+        <span class="deadline">by: ______________</span></div>
+    </div>
+  </div>
+</body>
+</html>

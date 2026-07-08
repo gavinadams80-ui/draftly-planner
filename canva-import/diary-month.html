@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Draftly — Month Page Template</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #e9e2d8; }
+  body { font-family: Georgia, 'Times New Roman', serif; }
+  .sheet { width: 1123px; height: 794px; background: #faf3ec; padding: 34px 42px; display: flex; flex-direction: column; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e8d9cc; padding-bottom: 6px; margin-bottom: 14px; }
+  .brand { font-weight: 700; font-size: 20px; color: #b16038; letter-spacing: 0.02em; }
+  .ctx { font-family: Arial, sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #857262; }
+  .grid { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: 24px repeat(5, 1fr); gap: 4px; }
+  .dow { text-align: center; font-family: Arial, sans-serif; font-size: 11px; font-weight: 700; color: #857262; text-transform: uppercase; letter-spacing: 0.08em; }
+  .cell { border: 1px solid #e8d9cc; border-radius: 5px; padding: 5px 7px; background: #fdf6ea; }
+  .date { font-size: 17px; font-weight: 700; color: #4a3f35; }
+</style>
+</head>
+<body>
+  <div class="sheet" data-document-role="page" data-label="Draftly month page">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">July 2026</span></div>
+    <div class="grid">
+      <span class="dow">Mon</span><span class="dow">Tue</span><span class="dow">Wed</span><span class="dow">Thu</span><span class="dow">Fri</span><span class="dow">Sat</span><span class="dow">Sun</span>
+      <div class="cell"></div><div class="cell"></div><div class="cell"><span class="date">1</span></div><div class="cell"><span class="date">2</span></div><div class="cell"><span class="date">3</span></div><div class="cell"><span class="date">4</span></div><div class="cell"><span class="date">5</span></div>
+      <div class="cell"><span class="date">6</span></div><div class="cell"><span class="date">7</span></div><div class="cell"><span class="date">8</span></div><div class="cell"><span class="date">9</span></div><div class="cell"><span class="date">10</span></div><div class="cell"><span class="date">11</span></div><div class="cell"><span class="date">12</span></div>
+      <div class="cell"><span class="date">13</span></div><div class="cell"><span class="date">14</span></div><div class="cell"><span class="date">15</span></div><div class="cell"><span class="date">16</span></div><div class="cell"><span class="date">17</span></div><div class="cell"><span class="date">18</span></div><div class="cell"><span class="date">19</span></div>
+      <div class="cell"><span class="date">20</span></div><div class="cell"><span class="date">21</span></div><div class="cell"><span class="date">22</span></div><div class="cell"><span class="date">23</span></div><div class="cell"><span class="date">24</span></div><div class="cell"><span class="date">25</span></div><div class="cell"><span class="date">26</span></div>
+      <div class="cell"><span class="date">27</span></div><div class="cell"><span class="date">28</span></div><div class="cell"><span class="date">29</span></div><div class="cell"><span class="date">30</span></div><div class="cell"><span class="date">31</span></div><div class="cell"></div><div class="cell"></div>
+    </div>
+  </div>
+</body>
+</html>

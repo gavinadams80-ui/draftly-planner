@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Draftly — Year Overview Template</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #e9e2d8; }
+  body { font-family: Georgia, 'Times New Roman', serif; }
+  .sheet { width: 1123px; height: 794px; background: #faf3ec; padding: 34px 42px; display: flex; flex-direction: column; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e8d9cc; padding-bottom: 6px; margin-bottom: 14px; }
+  .brand { font-weight: 700; font-size: 20px; color: #b16038; letter-spacing: 0.02em; }
+  .ctx { font-family: Arial, sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #857262; }
+  .grid { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 14px; }
+  .month { border: 1px solid #e8d9cc; border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; background: #fdf6ea; }
+  .month-label { font-size: 13px; font-weight: 700; color: #4a3f35; margin-bottom: 6px; }
+  .mm-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; flex: 1; }
+  .mm-dow { text-align: center; font-family: Arial, sans-serif; font-size: 8px; color: #b7a08c; font-weight: 700; }
+  .mm-cell { text-align: center; font-family: Arial, sans-serif; font-size: 9px; color: #6b5344; padding: 1px 0; }
+  .mm-cell.out { color: transparent; }
+</style>
+</head>
+<body>
+  <div class="sheet" data-document-role="page" data-label="Draftly year overview">
+    <div class="head"><span class="brand">Draftly</span><span class="ctx">Year overview · 2026</span></div>
+    <div class="grid">
+      <!-- 12 identical month blocks; buyer retypes month names/dates for their own year -->
+      <div class="month"><span class="month-label">January</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span><span class="mm-cell">2</span><span class="mm-cell">3</span><span class="mm-cell">4</span>
+        <span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span><span class="mm-cell">9</span><span class="mm-cell">10</span><span class="mm-cell">11</span>
+        <span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span><span class="mm-cell">16</span><span class="mm-cell">17</span><span class="mm-cell">18</span>
+        <span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span><span class="mm-cell">23</span><span class="mm-cell">24</span><span class="mm-cell">25</span>
+        <span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span><span class="mm-cell">30</span><span class="mm-cell">31</span><span class="mm-cell out"></span></div></div>
+      <div class="month"><span class="month-label">February</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span><span class="mm-cell">2</span><span class="mm-cell">3</span>
+        <span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span><span class="mm-cell">9</span><span class="mm-cell">10</span>
+        <span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span><span class="mm-cell">16</span><span class="mm-cell">17</span>
+        <span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span><span class="mm-cell">23</span><span class="mm-cell">24</span>
+        <span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span></div></div>
+      <div class="month"><span class="month-label">March</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span><span class="mm-cell">2</span>
+        <span class="mm-cell">3</span><span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span><span class="mm-cell">9</span>
+        <span class="mm-cell">10</span><span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span><span class="mm-cell">16</span>
+        <span class="mm-cell">17</span><span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span><span class="mm-cell">23</span>
+        <span class="mm-cell">24</span><span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span><span class="mm-cell">30</span></div></div>
+      <div class="month"><span class="month-label">April</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span>
+        <span class="mm-cell">2</span><span class="mm-cell">3</span><span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span>
+        <span class="mm-cell">9</span><span class="mm-cell">10</span><span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span>
+        <span class="mm-cell">16</span><span class="mm-cell">17</span><span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span>
+        <span class="mm-cell">23</span><span class="mm-cell">24</span><span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span></div></div>
+      <div class="month"><span class="month-label">May</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span><span class="mm-cell">2</span><span class="mm-cell">3</span>
+        <span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span><span class="mm-cell">9</span><span class="mm-cell">10</span>
+        <span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span><span class="mm-cell">16</span><span class="mm-cell">17</span>
+        <span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span><span class="mm-cell">23</span><span class="mm-cell">24</span>
+        <span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span><span class="mm-cell">30</span><span class="mm-cell">31</span></div></div>
+      <div class="month"><span class="month-label">June</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span>
+        <span class="mm-cell">2</span><span class="mm-cell">3</span><span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span>
+        <span class="mm-cell">9</span><span class="mm-cell">10</span><span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span>
+        <span class="mm-cell">16</span><span class="mm-cell">17</span><span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span>
+        <span class="mm-cell">23</span><span class="mm-cell">24</span><span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span></div></div>
+      <div class="month"><span class="month-label">July</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span><span class="mm-cell">2</span><span class="mm-cell">3</span><span class="mm-cell">4</span><span class="mm-cell">5</span>
+        <span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span><span class="mm-cell">9</span><span class="mm-cell">10</span><span class="mm-cell">11</span><span class="mm-cell">12</span>
+        <span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span><span class="mm-cell">16</span><span class="mm-cell">17</span><span class="mm-cell">18</span><span class="mm-cell">19</span>
+        <span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span><span class="mm-cell">23</span><span class="mm-cell">24</span><span class="mm-cell">25</span><span class="mm-cell">26</span>
+        <span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span><span class="mm-cell">30</span><span class="mm-cell">31</span><span class="mm-cell out"></span><span class="mm-cell out"></span></div></div>
+      <div class="month"><span class="month-label">August</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span><span class="mm-cell">2</span>
+        <span class="mm-cell">3</span><span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span><span class="mm-cell">9</span>
+        <span class="mm-cell">10</span><span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span><span class="mm-cell">16</span>
+        <span class="mm-cell">17</span><span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span><span class="mm-cell">23</span>
+        <span class="mm-cell">24</span><span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span><span class="mm-cell">30</span></div></div>
+      <div class="month"><span class="month-label">September</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span>
+        <span class="mm-cell">2</span><span class="mm-cell">3</span><span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span>
+        <span class="mm-cell">9</span><span class="mm-cell">10</span><span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span>
+        <span class="mm-cell">16</span><span class="mm-cell">17</span><span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span>
+        <span class="mm-cell">23</span><span class="mm-cell">24</span><span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span></div></div>
+      <div class="month"><span class="month-label">October</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span><span class="mm-cell">2</span><span class="mm-cell">3</span>
+        <span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span><span class="mm-cell">9</span><span class="mm-cell">10</span>
+        <span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span><span class="mm-cell">16</span><span class="mm-cell">17</span>
+        <span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span><span class="mm-cell">23</span><span class="mm-cell">24</span>
+        <span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span><span class="mm-cell">30</span><span class="mm-cell">31</span></div></div>
+      <div class="month"><span class="month-label">November</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell">1</span>
+        <span class="mm-cell">2</span><span class="mm-cell">3</span><span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span><span class="mm-cell">8</span>
+        <span class="mm-cell">9</span><span class="mm-cell">10</span><span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span><span class="mm-cell">15</span>
+        <span class="mm-cell">16</span><span class="mm-cell">17</span><span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span><span class="mm-cell">22</span>
+        <span class="mm-cell">23</span><span class="mm-cell">24</span><span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span><span class="mm-cell">29</span></div></div>
+      <div class="month"><span class="month-label">December</span><div class="mm-grid"><span class="mm-dow">M</span><span class="mm-dow">T</span><span class="mm-dow">W</span><span class="mm-dow">T</span><span class="mm-dow">F</span><span class="mm-dow">S</span><span class="mm-dow">S</span>
+        <span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span>
+        <span class="mm-cell">1</span><span class="mm-cell">2</span><span class="mm-cell">3</span><span class="mm-cell">4</span><span class="mm-cell">5</span><span class="mm-cell">6</span><span class="mm-cell">7</span>
+        <span class="mm-cell">8</span><span class="mm-cell">9</span><span class="mm-cell">10</span><span class="mm-cell">11</span><span class="mm-cell">12</span><span class="mm-cell">13</span><span class="mm-cell">14</span>
+        <span class="mm-cell">15</span><span class="mm-cell">16</span><span class="mm-cell">17</span><span class="mm-cell">18</span><span class="mm-cell">19</span><span class="mm-cell">20</span><span class="mm-cell">21</span>
+        <span class="mm-cell">22</span><span class="mm-cell">23</span><span class="mm-cell">24</span><span class="mm-cell">25</span><span class="mm-cell">26</span><span class="mm-cell">27</span><span class="mm-cell">28</span></div></div>
+    </div>
+  </div>
+</body>
+</html>

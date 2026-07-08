@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Draftly — Diary Cover Template</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #e9e2d8; }
+  body { font-family: Georgia, 'Times New Roman', serif; }
+  .sheet { width: 1123px; height: 794px; background: #faf3ec; padding: 34px 42px; position: relative; display: flex; align-items: center; justify-content: center; }
+  .bloom { position: absolute; width: 90px; height: 90px; color: #b16038; opacity: 0.85; }
+  .bloom.tl { top: 30px; left: 30px; } .bloom.tr { top: 30px; right: 30px; transform: scaleX(-1); }
+  .bloom.bl { bottom: 30px; left: 30px; transform: scaleY(-1); } .bloom.br { bottom: 30px; right: 30px; transform: scale(-1,-1); }
+  .frame { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .eyebrow { font-family: Arial, sans-serif; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #b16038; }
+  .title { font-size: 56px; color: #4a3f35; margin: 0; font-weight: 700; }
+  .flourish { font-size: 20px; color: #b16038; }
+  .range { font-family: Arial, sans-serif; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: #857262; margin: 0; }
+  .owner { font-size: 20px; font-style: italic; color: #4a3f35; margin: 0; }
+</style>
+</head>
+<body>
+  <div class="sheet" data-document-role="page" data-label="Draftly diary cover">
+    <svg class="bloom tl" viewBox="0 0 60 60"><g fill="currentColor"><circle cx="30" cy="14" r="7"/><circle cx="43" cy="24" r="7"/><circle cx="38" cy="39" r="7"/><circle cx="22" cy="39" r="7"/><circle cx="17" cy="24" r="7"/></g><circle cx="30" cy="27" r="6.5" fill="#fff9f0" stroke="currentColor" stroke-width="1.5"/></svg>
+    <svg class="bloom tr" viewBox="0 0 60 60"><g fill="currentColor"><circle cx="30" cy="14" r="7"/><circle cx="43" cy="24" r="7"/><circle cx="38" cy="39" r="7"/><circle cx="22" cy="39" r="7"/><circle cx="17" cy="24" r="7"/></g><circle cx="30" cy="27" r="6.5" fill="#fff9f0" stroke="currentColor" stroke-width="1.5"/></svg>
+    <svg class="bloom bl" viewBox="0 0 60 60"><g fill="currentColor"><circle cx="30" cy="14" r="7"/><circle cx="43" cy="24" r="7"/><circle cx="38" cy="39" r="7"/><circle cx="22" cy="39" r="7"/><circle cx="17" cy="24" r="7"/></g><circle cx="30" cy="27" r="6.5" fill="#fff9f0" stroke="currentColor" stroke-width="1.5"/></svg>
+    <svg class="bloom br" viewBox="0 0 60 60"><g fill="currentColor"><circle cx="30" cy="14" r="7"/><circle cx="43" cy="24" r="7"/><circle cx="38" cy="39" r="7"/><circle cx="22" cy="39" r="7"/><circle cx="17" cy="24" r="7"/></g><circle cx="30" cy="27" r="6.5" fill="#fff9f0" stroke="currentColor" stroke-width="1.5"/></svg>
+    <div class="frame">
+      <span class="eyebrow">✿ &nbsp; a gentle life planner &nbsp; ✿</span>
+      <h1 class="title">Life Planner</h1>
+      <div class="flourish">❀ ── ✿ ── ❀</div>
+      <p class="range">July – September 2026</p>
+      <p class="owner">for you</p>
+    </div>
+  </div>
+</body>
+</html>
