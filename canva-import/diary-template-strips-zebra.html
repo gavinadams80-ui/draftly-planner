@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Draftly — Weekly Diary Template (strips)</title>
+<title>Draftly — Weekly Diary Template (strips, shaded lines)</title>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: #e9e2d8; }
@@ -36,6 +36,9 @@
   .strip-lines { flex: 1; display: flex; flex-direction: column; min-height: 0; }
   .strip-lines i { flex: 1; min-height: 4px; border-bottom: 1px solid #ecdfce; font-style: normal; position: relative; }
   .strip-lines i .t { position: absolute; left: 1px; top: 0; font-family: Arial, sans-serif; font-size: 7px; color: #c8b8a2; line-height: 1.2; }
+  /* Shaded-lines variant: a gentle alternating tint behind every second line, matching the
+   *  app's "shaded lines" (zebra) print option. */
+  .strip-lines i:nth-child(even) { background: rgba(184, 138, 99, 0.09); }
 
   /* The weekend row: Sat and Sun side by side, sharing the third row's height. */
   .weekend-row { flex: 1; display: flex; min-height: 0; border-bottom: 1px solid #efe3d3; padding: 3px 0; }
@@ -62,7 +65,7 @@
 </style>
 </head>
 <body>
-  <div class="sheet" data-document-role="page" data-label="Draftly weekly diary — strips (open book, horizontal bands)">
+  <div class="sheet" data-document-role="page" data-label="Draftly weekly diary — strips (open book, horizontal bands), shaded lines">
 
     <div class="spread">
 

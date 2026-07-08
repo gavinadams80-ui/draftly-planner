@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Draftly — Weekly Diary Template (strips)</title>
+<title>Draftly — Weekly Diary Template (shaded lines)</title>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: #e9e2d8; }
@@ -23,24 +23,27 @@
   .brand { font-weight: 700; font-size: 20px; color: #b16038; letter-spacing: 0.02em; }
   .ctx { font-family: Arial, sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #857262; }
 
-  /* Horizontal day bands: three full-width rows, then a 4th row for footer content. */
-  .rows { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-  .strip { flex: 1; display: flex; flex-direction: column; border-bottom: 1px solid #efe3d3; padding: 3px 0; min-height: 0; }
-  .strip-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-  .strip-day { font-size: 15px; font-weight: 700; color: #4a3f35; }
-  .strip-day .dow { font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #857262; margin-left: 6px; }
-  .strip-prompt { font-style: italic; font-size: 11px; color: #b16038; }
-  /* Horizontal ruled lines stacked top-to-bottom within the band (same orientation as the
-   *  columns layout — the app reuses one RuleLines component for both), each with its own
-   *  hour label — a plain, separate, editable text a shift worker can retype in Canva. */
-  .strip-lines { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-  .strip-lines i { flex: 1; min-height: 4px; border-bottom: 1px solid #ecdfce; font-style: normal; position: relative; }
-  .strip-lines i .t { position: absolute; left: 1px; top: 0; font-family: Arial, sans-serif; font-size: 7px; color: #c8b8a2; line-height: 1.2; }
+  /* Vertical divider lines between each day column, so the columns read as ruled sections
+   *  of the page (not just gaps) — matches the app's shift-worker-friendly diary. */
+  .cols { flex: 1; display: flex; min-height: 0; }
+  .day { flex: 1; display: flex; flex-direction: column; min-width: 0; padding: 0 9px; border-right: 1px solid #e8d9cc; }
+  .day:last-child { border-right: none; }
+  .day-head { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+  .date { font-size: 22px; font-weight: 700; color: #4a3f35; line-height: 1; }
+  .dow { font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #857262; }
+  .lines { flex: 1; display: flex; flex-direction: column; }
+  .lines i { flex: 1; min-height: 4px; border-bottom: 1px solid #e8d9cc; font-style: normal; position: relative; }
+  /* The hour label for each line — a plain, separate, editable text element (so a shift
+   *  worker can retype it directly in Canva to match their real start/end times). */
+  .lines i .t { position: absolute; left: 1px; top: 0; font-family: Arial, sans-serif; font-size: 8px; color: #c8b8a2; line-height: 1.2; }
+  /* Shaded-lines variant: a gentle alternating tint behind every second line, matching the
+   *  app's "shaded lines" (zebra) print option. */
+  .lines i:nth-child(even) { background: rgba(184, 138, 99, 0.09); }
 
-  /* The weekend row: Sat and Sun side by side, sharing the third row's height. */
-  .weekend-row { flex: 1; display: flex; min-height: 0; border-bottom: 1px solid #efe3d3; padding: 3px 0; }
-  .weekend-half { flex: 1; display: flex; flex-direction: column; min-height: 0; padding: 0 8px; }
-  .weekend-half:first-child { border-right: 1px solid #efe3d3; }
+  .weekend { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; padding-left: 9px; border-left: 1px solid #e8d9cc; }
+  .half { flex: 1; display: flex; flex-direction: column; }
+  .half + .half { border-top: 1px solid #e8d9cc; padding-top: 4px; }
+  .half .lines i { min-height: 3px; }
 
   .foot { flex: 0 0 150px; display: flex; gap: 10px; margin-top: 10px; }
   .box { flex: 1; border: 1px solid #e8d9cc; border-radius: 8px; background: #fdf6ea; padding: 8px 12px 10px; display: flex; flex-direction: column; }
@@ -56,42 +59,39 @@
   .mm-cell { aspect-ratio: 1; border-radius: 3px; background: #ecdfce; }
   .mm-cell.now { background: #b16038; }
   .mm-cell.out { background: transparent; }
-
-  .notes-box .plain-lines { flex: 1; display: flex; flex-direction: column; }
-  .notes-box .plain-lines i { flex: 1; min-height: 6px; border-bottom: 1px solid #ecdfce; }
 </style>
 </head>
 <body>
-  <div class="sheet" data-document-role="page" data-label="Draftly weekly diary — strips (open book, horizontal bands)">
+  <div class="sheet" data-document-role="page" data-label="Draftly weekly diary — open book spread, shaded lines">
 
     <div class="spread">
 
-      <!-- LEFT PAGE — Mon / Tue / Wed as horizontal bands + this week's dinners -->
+      <!-- LEFT PAGE — Mon / Tue / Wed + this week's dinners -->
       <div class="page">
         <div class="head">
           <span class="brand">Draftly</span>
           <span class="ctx">July 2026</span>
         </div>
-        <div class="rows">
-          <div class="strip">
-            <div class="strip-head"><span class="strip-day">14 <span class="dow">Mon</span></span><span class="strip-prompt">hello, lovely ✿</span></div>
-            <div class="strip-lines">
+        <div class="cols">
+          <div class="day">
+            <div class="day-head"><span class="date">14</span><span class="dow">Mon</span></div>
+            <div class="lines">
               <i><span class="t">7am</span></i><i><span class="t">8am</span></i><i><span class="t">9am</span></i><i><span class="t">10am</span></i><i><span class="t">11am</span></i>
               <i><span class="t">12pm</span></i><i><span class="t">1pm</span></i><i><span class="t">2pm</span></i><i><span class="t">3pm</span></i><i><span class="t">4pm</span></i>
               <i><span class="t">5pm</span></i><i><span class="t">6pm</span></i><i><span class="t">7pm</span></i><i><span class="t">8pm</span></i><i><span class="t">9pm</span></i>
             </div>
           </div>
-          <div class="strip">
-            <div class="strip-head"><span class="strip-day">15 <span class="dow">Tue</span></span><span class="strip-prompt">you're doing great</span></div>
-            <div class="strip-lines">
+          <div class="day">
+            <div class="day-head"><span class="date">15</span><span class="dow">Tue</span></div>
+            <div class="lines">
               <i><span class="t">7am</span></i><i><span class="t">8am</span></i><i><span class="t">9am</span></i><i><span class="t">10am</span></i><i><span class="t">11am</span></i>
               <i><span class="t">12pm</span></i><i><span class="t">1pm</span></i><i><span class="t">2pm</span></i><i><span class="t">3pm</span></i><i><span class="t">4pm</span></i>
               <i><span class="t">5pm</span></i><i><span class="t">6pm</span></i><i><span class="t">7pm</span></i><i><span class="t">8pm</span></i><i><span class="t">9pm</span></i>
             </div>
           </div>
-          <div class="strip">
-            <div class="strip-head"><span class="strip-day">16 <span class="dow">Wed</span></span><span class="strip-prompt">one thing at a time</span></div>
-            <div class="strip-lines">
+          <div class="day">
+            <div class="day-head"><span class="date">16</span><span class="dow">Wed</span></div>
+            <div class="lines">
               <i><span class="t">7am</span></i><i><span class="t">8am</span></i><i><span class="t">9am</span></i><i><span class="t">10am</span></i><i><span class="t">11am</span></i>
               <i><span class="t">12pm</span></i><i><span class="t">1pm</span></i><i><span class="t">2pm</span></i><i><span class="t">3pm</span></i><i><span class="t">4pm</span></i>
               <i><span class="t">5pm</span></i><i><span class="t">6pm</span></i><i><span class="t">7pm</span></i><i><span class="t">8pm</span></i><i><span class="t">9pm</span></i>
@@ -114,41 +114,41 @@
 
       <div class="spine"></div>
 
-      <!-- RIGHT PAGE — Thu / Fri bands, then Sat | Sun side by side + mini month & notes -->
+      <!-- RIGHT PAGE — Thu / Fri / (Sat over Sun) + to do & mini month -->
       <div class="page">
         <div class="head">
           <span class="ctx">Week 29</span>
           <span class="brand">Draftly</span>
         </div>
-        <div class="rows">
-          <div class="strip">
-            <div class="strip-head"><span class="strip-day">17 <span class="dow">Thu</span></span><span class="strip-prompt">be kind to you today</span></div>
-            <div class="strip-lines">
+        <div class="cols">
+          <div class="day">
+            <div class="day-head"><span class="date">17</span><span class="dow">Thu</span></div>
+            <div class="lines">
               <i><span class="t">7am</span></i><i><span class="t">8am</span></i><i><span class="t">9am</span></i><i><span class="t">10am</span></i><i><span class="t">11am</span></i>
               <i><span class="t">12pm</span></i><i><span class="t">1pm</span></i><i><span class="t">2pm</span></i><i><span class="t">3pm</span></i><i><span class="t">4pm</span></i>
               <i><span class="t">5pm</span></i><i><span class="t">6pm</span></i><i><span class="t">7pm</span></i><i><span class="t">8pm</span></i><i><span class="t">9pm</span></i>
             </div>
           </div>
-          <div class="strip">
-            <div class="strip-head"><span class="strip-day">18 <span class="dow">Fri</span></span><span class="strip-prompt">small steps still count</span></div>
-            <div class="strip-lines">
+          <div class="day">
+            <div class="day-head"><span class="date">18</span><span class="dow">Fri</span></div>
+            <div class="lines">
               <i><span class="t">7am</span></i><i><span class="t">8am</span></i><i><span class="t">9am</span></i><i><span class="t">10am</span></i><i><span class="t">11am</span></i>
               <i><span class="t">12pm</span></i><i><span class="t">1pm</span></i><i><span class="t">2pm</span></i><i><span class="t">3pm</span></i><i><span class="t">4pm</span></i>
               <i><span class="t">5pm</span></i><i><span class="t">6pm</span></i><i><span class="t">7pm</span></i><i><span class="t">8pm</span></i><i><span class="t">9pm</span></i>
             </div>
           </div>
-          <div class="weekend-row">
-            <div class="weekend-half">
-              <div class="strip-head"><span class="strip-day">19 <span class="dow">Sat</span></span></div>
-              <div class="strip-lines">
+          <div class="weekend">
+            <div class="half">
+              <div class="day-head"><span class="date">19</span><span class="dow">Sat</span></div>
+              <div class="lines">
                 <i><span class="t">7am</span></i><i><span class="t">8am</span></i><i><span class="t">9am</span></i><i><span class="t">10am</span></i><i><span class="t">11am</span></i>
                 <i><span class="t">12pm</span></i><i><span class="t">1pm</span></i><i><span class="t">2pm</span></i><i><span class="t">3pm</span></i><i><span class="t">4pm</span></i>
                 <i><span class="t">5pm</span></i><i><span class="t">6pm</span></i><i><span class="t">7pm</span></i><i><span class="t">8pm</span></i><i><span class="t">9pm</span></i>
               </div>
             </div>
-            <div class="weekend-half">
-              <div class="strip-head"><span class="strip-day">20 <span class="dow">Sun</span></span></div>
-              <div class="strip-lines">
+            <div class="half">
+              <div class="day-head"><span class="date">20</span><span class="dow">Sun</span></div>
+              <div class="lines">
                 <i><span class="t">7am</span></i><i><span class="t">8am</span></i><i><span class="t">9am</span></i><i><span class="t">10am</span></i><i><span class="t">11am</span></i>
                 <i><span class="t">12pm</span></i><i><span class="t">1pm</span></i><i><span class="t">2pm</span></i><i><span class="t">3pm</span></i><i><span class="t">4pm</span></i>
                 <i><span class="t">5pm</span></i><i><span class="t">6pm</span></i><i><span class="t">7pm</span></i><i><span class="t">8pm</span></i><i><span class="t">9pm</span></i>
@@ -157,6 +157,14 @@
           </div>
         </div>
         <div class="foot">
+          <div class="box">
+            <span class="box-title">To do this week</span>
+            <div class="box-row"><span class="tick"></span><span class="rule"></span></div>
+            <div class="box-row"><span class="tick"></span><span class="rule"></span></div>
+            <div class="box-row"><span class="tick"></span><span class="rule"></span></div>
+            <div class="box-row"><span class="tick"></span><span class="rule"></span></div>
+            <div class="box-row"><span class="tick"></span><span class="rule"></span></div>
+          </div>
           <div class="box mini-month">
             <span class="box-title">July</span>
             <div class="mm-grid">
@@ -167,10 +175,6 @@
               <span class="mm-cell"></span><span class="mm-cell"></span><span class="mm-cell"></span><span class="mm-cell"></span><span class="mm-cell"></span><span class="mm-cell"></span><span class="mm-cell"></span>
               <span class="mm-cell"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span><span class="mm-cell out"></span>
             </div>
-          </div>
-          <div class="box notes-box">
-            <span class="box-title">Notes</span>
-            <div class="plain-lines"><i></i><i></i><i></i></div>
           </div>
         </div>
       </div>
