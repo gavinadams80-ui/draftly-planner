@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Draftly — Sticker Collection (correct source)</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #cfc8bd; }
+  body { font-family: 'Trebuchet MS', 'Segoe UI', 'Nunito', Arial, sans-serif; display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 24px 0; }
+
+  /* Each individual sticker is its OWN square page with a fully TRANSPARENT background, so
+   *  exporting the page as a PNG with a transparent background gives a clean die-cut sticker
+   *  that drops straight into the planner (Stamps → upload). This is the actual thing the app
+   *  needs — NOT a photo collage. 400x400 with generous padding so the die-cut shadow/white
+   *  rim is never clipped. */
+  .sticker {
+    width: 400px; height: 400px; background: transparent;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* The die-cut badge: a soft pastel disc, a thick white peel-rim, a gentle drop shadow, the
+   *  emoji, and the label — matching the app's gentle pastel sticker aesthetic (STAMP_COLORS +
+   *  DEFAULT_STAMPS in src/lib/stamps.ts). `--tint` is set per badge below. */
+  .badge {
+    width: 330px; height: 330px; border-radius: 50%;
+    background: var(--tint);
+    border: 13px solid #ffffff;
+    box-shadow: 0 12px 26px rgba(74, 63, 53, 0.20);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; text-align: center; padding: 20px;
+  }
+  .badge .emoji { font-size: 132px; line-height: 1; }
+  .badge .label {
+    font-weight: 800; font-size: 30px; color: #4a3f35; letter-spacing: 0.005em;
+    line-height: 1.05; max-width: 260px;
+  }
+
+  /* ---- print-and-cut sheet: all ten badges on one A4 page for physical stickers ---- */
+  .sheet-page {
+    width: 794px; height: 1123px; background: #fffdf9; padding: 44px 48px;
+    display: flex; flex-direction: column;
+  }
+  .sheet-head { text-align: center; margin-bottom: 18px; }
+  .sheet-title { font-weight: 800; font-size: 26px; color: #b16038; margin: 0; }
+  .sheet-sub { font-size: 13px; color: #857262; margin: 4px 0 0; }
+  .sheet-grid {
+    flex: 1; display: grid; grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr); gap: 16px; place-items: center;
+  }
+  .cut { padding: 8px; border-radius: 50%; border: 1.5px dashed #c9b8a6; }
+  .cut .badge {
+    width: 200px; height: 200px; border-width: 9px;
+    box-shadow: 0 6px 14px rgba(74, 63, 53, 0.16);
+  }
+  .cut .badge .emoji { font-size: 80px; }
+  .cut .badge .label { font-size: 19px; max-width: 160px; }
+</style>
+</head>
+<body>
+
+  <!-- ============ individual transparent die-cut stickers (one per page) ============ -->
+
+  <div class="sticker" data-document-role="page" data-label="Gold star">
+    <div class="badge" style="--tint:#fbeec2"><span class="emoji">⭐</span><span class="label">Gold star</span></div>
+  </div>
+
+  <div class="sticker" data-document-role="page" data-label="Nailed it">
+    <div class="badge" style="--tint:#cdeedd"><span class="emoji">✅</span><span class="label">Nailed it</span></div>
+  </div>
+
+  <div class="sticker" data-document-role="page" data-label="On fire">
+    <div class="badge" style="--tint:#fde0cf"><span class="emoji">🔥</span><span class="label">On fire</span></div>
+  </div>
+
+  <div class="sticker" data-document-role="page" data-label="Milestone">
+    <div class="badge" style="--tint:#fbeec2"><span class="emoji">🏆</span><span class="label">Milestone</span></div>
+  </div>
+
+  <div class="sticker" data-document-role="page" data-label="Self-care">
+    <div class="badge" style="--tint:#fbdce7"><span class="emoji">❤️</span><span class="label">Self-care</span></div>
+  </div>
+
+  <div class="sticker" data-document-role="page" data-label="Moved my body">
+    <div class="badge" style="--tint:#d3e6fb"><span class="emoji">💪</span><span class="label">Moved my body</span></div>
+  </div>
+
+  <div class="sticker" data-document-role="page" data-label="Celebrate">
+    <div class="badge" style="--tint:#e4dbf7"><span class="emoji">🎉</span><span class="label">Celebrate</span></div>
+  </div>
+
+  <div class="sticker" data-document-role="page" data-label="Good day">
+    <div class="badge" style="--tint:#cdeedd"><span class="emoji">🌈</span><span class="label">Good day</span></div>
+  </div>
+
+  <div class="sticker" data-document-role="page" data-label="Hydrated">
+    <div class="badge" style="--tint:#d3e6fb"><span class="emoji">💧</span><span class="label">Hydrated</span></div>
+  </div>
+
+  <div class="sticker" data-document-role="page" data-label="Rested">
+    <div class="badge" style="--tint:#e4dbf7"><span class="emoji">😌</span><span class="label">Rested</span></div>
+  </div>
+
+  <!-- ============ print-and-cut sheet (all ten on one A4 page) ============ -->
+
+  <div class="sheet-page" data-document-role="page" data-label="Sticker sheet (print & cut)">
+    <div class="sheet-head">
+      <p class="sheet-title">Draftly Sticker Collection ✿</p>
+      <p class="sheet-sub">print on sticker paper · cut along the dashed guides · celebrate your days</p>
+    </div>
+    <div class="sheet-grid">
+      <div class="cut"><div class="badge" style="--tint:#fbeec2"><span class="emoji">⭐</span><span class="label">Gold star</span></div></div>
+      <div class="cut"><div class="badge" style="--tint:#cdeedd"><span class="emoji">✅</span><span class="label">Nailed it</span></div></div>
+      <div class="cut"><div class="badge" style="--tint:#fde0cf"><span class="emoji">🔥</span><span class="label">On fire</span></div></div>
+      <div class="cut"><div class="badge" style="--tint:#fbeec2"><span class="emoji">🏆</span><span class="label">Milestone</span></div></div>
+      <div class="cut"><div class="badge" style="--tint:#fbdce7"><span class="emoji">❤️</span><span class="label">Self-care</span></div></div>
+      <div class="cut"><div class="badge" style="--tint:#d3e6fb"><span class="emoji">💪</span><span class="label">Moved my body</span></div></div>
+      <div class="cut"><div class="badge" style="--tint:#e4dbf7"><span class="emoji">🎉</span><span class="label">Celebrate</span></div></div>
+      <div class="cut"><div class="badge" style="--tint:#cdeedd"><span class="emoji">🌈</span><span class="label">Good day</span></div></div>
+      <div class="cut"><div class="badge" style="--tint:#d3e6fb"><span class="emoji">💧</span><span class="label">Hydrated</span></div></div>
+      <div class="cut"><div class="badge" style="--tint:#e4dbf7"><span class="emoji">😌</span><span class="label">Rested</span></div></div>
+    </div>
+  </div>
+
+</body>
+</html>
