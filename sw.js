@@ -13,7 +13,7 @@
 // CACHE version uses build timestamp for automatic cache busting on each deploy
 // The SW activate handler automatically deletes old cache versions, ensuring fresh assets
 // Format: draftly-planner-v{TIMESTAMP}
-const CACHE_VERSION = '20260714231640'; // Replaced by build script (scripts/inject-cache-version.js)
+const CACHE_VERSION = '20260726110308'; // Replaced by build script (scripts/inject-cache-version.js)
 const CACHE = 'draftly-planner-v' + CACHE_VERSION;
 const INDEX_URL = new URL('./', self.registration.scope).href;
 
@@ -139,7 +139,13 @@ self.addEventListener('notificationclick', (event) => {
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
       const open = clients.find((c) => c.url.startsWith(self.registration.scope));
-      if (open) return open.focus();
+      if (open) {
+        // The app's already open — focus it AND hand over the reminder's route, so the
+        // tap lands on the bill/appointment it's about instead of wherever the user left
+        // off. main.tsx listens for this message and navigates (hash-based routing).
+        open.postMessage({ type: 'draftly:reminder-route', route });
+        return open.focus();
+      }
       return self.clients.openWindow(INDEX_URL + route);
     }),
   );
