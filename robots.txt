@@ -1,0 +1,35 @@
+# Draftly Planner — search + AI answer engines ALLOW (same posture as
+# www.draftly.info, V1.4 2026-07-30). These crawlers decide whether the
+# planner can be cited in AI answers. Do not disallow them.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Everything else
+User-agent: *
+Allow: /
+
+Sitemap: https://planner.draftly.info/sitemap.xml
